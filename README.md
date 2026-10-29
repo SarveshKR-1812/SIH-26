@@ -8,7 +8,7 @@
 
 ## Problem Title
 
-SIH 26033: Multiple intermediaries reduce farmers' earnings and increase consumer prices
+SIH 26033: Multiple intermediaries reduce farmer's earnings and increase consumer prices
 
 ## Problem Creator's Organization
 
