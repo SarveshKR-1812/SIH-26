@@ -2,103 +2,133 @@
 
 ## Date:29.10.2026
 
-## Register Number:26016808
+## Reference Number:26016808
 
-## Name:K R Sarvesh
+## Name: K R Sarvesh
 
 ## Problem Title
 
-SIH 26033: Multiple intermediaries reduce farmer's earnings and increase consumer prices
-
-## Problem Description
-
-Background: Agricultural produce passes through many intermediaries (commission agents, wholesalers, retailers) before reaching the consumer. Each layer adds a margin, so farmers receive a small share of the final price while consumers pay more.
-
-Expected Solution: Create a digital marketplace that:
-- Connects farmers/FPOs directly with consumers and bulk buyers.
-- Provides logistics support.
-- Uses AI for demand forecasting and route optimization.
-
-Benefits: Better prices for farmers, lower prices for consumers, reduced supply chain inefficiencies.
+SIH 26033: Multiple intermediaries reduce farmers' earnings and increase consumer prices
 
 ## Problem Creator's Organization
 
 Ministry of Consumer Affairs, Food & Public Distribution
 
-## Theme
 
-Agriculture, FoodTech & Rural Development
+## Problem Description
 
-## Idea
+**Background:** Agricultural produce in India usually passes through several intermediaries (commission agents, wholesalers, mandi traders, retailers) before it reaches the consumer. Each layer adds its own margin, so farmers receive only a small share of the final price while consumers pay much more. Small and marginal farmers also lack market information, storage and transport, so they often sell at distress prices right after harvest.
 
-**Farm2Table: AI-powered direct farm-to-buyer marketplace.**
-Farmers and FPOs list produce in their own language, buyers order directly, and the platform handles pricing, pickup and delivery. AI forecasts demand and prices so farmers know what to grow and when to sell, and route optimization cuts delivery cost.
+**Key Challenges:**
+- Farmers have little visibility into real-time demand and fair prices.
+- Many layers of intermediaries inflate consumer prices.
+- Poor logistics and cold storage lead to post-harvest losses.
+- Small farmers cannot reach bulk buyers on their own.
+- Low digital literacy and language barriers limit the use of technology.
 
-## Proposed Solution / Architecture Diagram
+**Expected Solution:** A digital marketplace that:
+- Connects farmers/FPOs directly with consumers and bulk buyers.
+- Provides logistics support.
+- Uses AI for demand forecasting and route optimization.
 
-1. **Listing Phase:** Farmers/FPOs add produce (crop, quantity, grade, price) through a mobile app, with voice and regional-language support.
-2. **Matching Phase:** Consumers and bulk buyers (restaurants, retailers, institutions) browse and order directly. A price breakdown shows what the farmer earns versus the mandi price.
-3. **Intelligence Phase:** AI forecasts demand and suggests fair prices using historical mandi data.
-4. **Logistics Phase:** Orders are grouped by area, and the optimized pickup and delivery route is assigned to a transport partner.
+**Benefits:** Better prices for farmers, lower prices for consumers, reduced supply chain inefficiencies.
+
+## Proposed Solution
+
+**Farm2Table: an AI-powered direct farm-to-buyer marketplace.**
+
+1. **Detailed explanation of the proposed solution:**
+   Farmers and FPOs list produce (crop, quantity, grade, price) through a mobile app with voice and regional-language support. Consumers and bulk buyers (restaurants, retailers, institutions) browse and order directly. The platform handles payments through UPI and arranges pickup and delivery with local transport partners.
+
+2. **How it addresses the problem:**
+   - Direct farmer-to-buyer sales remove the intermediary layers, so farmers earn more and consumers pay less.
+   - A transparent price breakdown shows what the farmer receives versus the mandi price.
+   - AI demand and price forecasts help farmers decide what to sell and when.
+   - Route optimization and pooled transport reduce logistics cost and spoilage.
+
+3. **Innovation and uniqueness of the solution:**
+   - AI-based demand and price forecasting built on public mandi data.
+   - Voice-first, regional-language interface, with SMS/WhatsApp fallback for farmers without smartphones.
+   - FPO dashboard to aggregate small farmers' produce for bulk orders.
+   - "Fair-price score" showing how much of the consumer's rupee reaches the farmer.
+<img width="1425" height="953" alt="SIH 26" src="https://github.com/user-attachments/assets/4897297e-20a3-4599-87a3-2395a5037540" />
+
+## Technical Approach
+
+**1. Technologies to be used:**
+
+| Layer | Technologies |
+|---|---|
+| Mobile / Web | Flutter or React Native, React |
+| Backend | Python (FastAPI) or Node.js (Express) |
+| Database | PostgreSQL + PostGIS, Redis |
+| AI / ML | Python, Prophet / XGBoost, scikit-learn |
+| Route optimization | Google OR-Tools, OpenStreetMap / Leaflet |
+| Payments | UPI, Razorpay |
+| Notifications | Firebase Cloud Messaging, SMS / WhatsApp API |
+| Hosting | AWS / GCP, or free tiers (Vercel, Render) for the prototype |
+
+**2. Methodology and process for implementation:**
 
 ```mermaid
 flowchart TD
-    A[Farmer / FPO App] --> G[API Gateway & Load Balancer]
-    B[Consumer / Bulk Buyer App] --> G
-    G --> C[Marketplace Service]
-    G --> D[AI Forecast Service]
-    G --> E[Route Optimization Service]
-    G --> F[Payment Service - UPI]
-    C --> H[(PostgreSQL + PostGIS)]
-    D --> H
-    E --> H
-    G --> I[(Redis Cache)]
+    A[Farmer / FPO lists produce] --> B[AI forecasts demand and suggests price]
+    B --> C[Buyer browses and places order]
+    C --> D[UPI payment]
+    D --> E[Route optimization groups orders]
+    E --> F[Logistics partner picks up and delivers]
+    F --> G[Delivery confirmed, farmer paid]
+    G --> H[Ratings and feedback]
 ```
 
-## Use Cases
+Implementation steps:
+1. Build the farmer and buyer screens (listing, browsing, ordering).
+2. Build the backend APIs for users, listings, orders and payments.
+3. Train the price/demand forecasting model on Agmarknet data and expose it as an API.
+4. Add route optimization with OR-Tools and display routes on a map.
+5. Pilot in one district with a few crops, then expand.
 
-**1. Direct Sale to Bulk Buyers:**
-An FPO lists 2 tonnes of tomatoes. A restaurant chain orders directly at an agreed price, with no mandi or agent commission.
+## Feasibility and Viability
 
-**2. AI Price and Demand Guidance:**
-Before listing, the farmer sees the predicted price and demand for the coming week and decides the best time to sell, reducing wastage and distress sales.
+**Feasibility:**
+- All components use mature technology: smartphones, GPS, UPI, cloud hosting and open-source ML libraries.
+- Public mandi price data (Agmarknet, eNAM) is available for training.
+- FPOs already aggregate farmers, which makes onboarding easier.
+- A prototype can start in one district with a few crops such as tomato, onion and potato.
 
-**3. Optimized Pickup and Delivery:**
-Orders from nearby farms are combined into one route, lowering transport cost and delivery time.
+**Viability:**
+- Small commission or delivery fee per order, far lower than traditional intermediary margins.
+- Subscription plans for bulk buyers.
+- Optional premium AI insights for FPOs.
 
-## Technology Stack
+**Potential challenges and risks, and strategies to overcome them:**
 
-**1. Mobile and Web Application**
-Technologies: Flutter (Dart) or React Native, React (web)
-Purpose: Farmer and buyer interfaces with regional-language and voice support.
+| Challenge | Strategy |
+|---|---|
+| Low digital literacy among farmers | Voice-based regional-language app; onboarding through FPOs and local agents |
+| Last-mile delivery and cold-chain cost | Local collection hubs, route optimization, pooled transport |
+| Quality and trust issues | Grading standards, ratings, photo verification |
+| Poor rural connectivity | Lightweight app, offline mode, SMS/WhatsApp fallback |
+| Cold start (buyers vs. farmers) | Start with FPOs and institutional buyers, then expand |
+| Payment delays | UPI-based instant payment and escrow |
 
-**2. Backend and APIs**
-Technologies: Python (FastAPI) or Node.js (Express), PostgreSQL, PostGIS, Redis
-Purpose: Handles users, listings, orders, locations and caching.
+## Impact and Benefits
 
-**3. AI / ML**
-Technologies: Python, Prophet / XGBoost, scikit-learn
-Purpose: Demand and price forecasting from historical mandi price data.
+**Potential impact on the target audience:**
+Small and marginal farmers, FPOs, urban and rural consumers, bulk buyers and local transport providers gain direct market access, fair pricing and transparency.
 
-**4. Route Optimization**
-Technologies: Google OR-Tools, OpenStreetMap / Leaflet
-Purpose: Plans efficient pickup and delivery routes and displays them on a map.
+**Benefits of the solution:**
+- **Social:** better rural livelihoods, market access for small farmers, local jobs in logistics and aggregation.
+- **Economic:** higher farmer margins, lower consumer prices, lower transport and transaction costs.
+- **Environmental:** less food waste through demand forecasting, lower fuel use through optimized and pooled routes.
+- **Policy alignment:** supports eNAM, FPO promotion and Digital India.
 
-**5. Payments**
-Technologies: UPI, Razorpay
-Purpose: Secure, direct payments to farmers.
+## Research and References
 
-**6. Notifications**
-Technologies: Firebase Cloud Messaging, SMS / WhatsApp API
-Purpose: Order updates and price alerts, including for farmers without smartphones.
-
-## Dependencies
-
-**Data Sources:**
-Agmarknet and eNAM mandi price data for model training and price comparison.
-
-**Partners / Infrastructure:**
-FPOs for farmer onboarding, local transport partners, and collection hubs for aggregation.
-
-**APIs & SDKs:**
-Maps/Routing API, payment gateway SDK, speech-to-text and text-to-speech for voice support, location permissions for pickup and delivery.
+1. Agmarknet (Agricultural Marketing Information Network): mandi price and arrival data
+2. eNAM (National Agriculture Market): online trading platform
+3. Ministry of Consumer Affairs, Food & Public Distribution: price monitoring reports
+4. NABARD and Government of India resources on Farmer Producer Organisations (FPOs)
+5. Existing platforms studied for comparison: AgroStar, DeHaat, Kisan Network
+6. Google OR-Tools documentation: vehicle routing
+7. Prophet / XGBoost documentation: time-series forecasting
